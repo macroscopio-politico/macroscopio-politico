@@ -1,0 +1,19 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container">
+    <h1 class="page-header">Candidaturas</h1>
+
+    <div id="react-entry-point">
+        <div class="_dash-loading">
+        </div>
+    </div>
+
+    <div id="disqus_thread"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    {{ config | safe}}
+    {{ css | safe }}
+    {{ js | safe }}
+    {% include 'parts/disqus.html' %}
+{% endblock %}
