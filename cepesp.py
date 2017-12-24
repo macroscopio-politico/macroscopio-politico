@@ -90,7 +90,7 @@ def consolidacao(cargo=1,
                  numero_candidato=None,
                  numero_partido=None,
                  codigo_municipio=None):
-    request = "tse?cargo={}&anos={}&agregacao_politica={}&agregacao_regional={}&mun_filter=&uf_filter=&brancos=1&nulos=1&selected_columns%5B%5D=ANO_ELEICAO&selected_columns%5B%5D=NUM_TURNO&selected_columns%5B%5D=UF&selected_columns%5B%5D=DESCRICAO_ELEICAO&selected_columns%5B%5D=CODIGO_CARGO&selected_columns%5B%5D=DESCRICAO_CARGO&selected_columns%5B%5D=QTD_APTOS&selected_columns%5B%5D=QTD_COMPARECIMENTO&selected_columns%5B%5D=QTD_ABSTENCOES&selected_columns%5B%5D=QT_VOTOS_NOMINAIS&selected_columns%5B%5D=QT_VOTOS_BRANCOS&selected_columns%5B%5D=QT_VOTOS_NULOS&selected_columns%5B%5D=QT_VOTOS_LEGENDA&format=gzip".format(
+    request = "tse?cargo={}&anos={}&agregacao_politica={}&agregacao_regional={}&mun_filter=&uf_filter=&brancos=1&nulos=1&selected_columns%5B%5D=ANO_ELEICAO&selected_columns%5B%5D=NUM_TURNO&selected_columns%5B%5D=UF&selected_columns%5B%5D=DESCRICAO_ELEICAO&selected_columns%5B%5D=DESCRICAO_CARGO&selected_columns%5B%5D=QTD_APTOS&selected_columns%5B%5D=QTD_COMPARECIMENTO&selected_columns%5B%5D=QTD_ABSTENCOES&selected_columns%5B%5D=QT_VOTOS_NOMINAIS&selected_columns%5B%5D=QT_VOTOS_BRANCOS&selected_columns%5B%5D=QT_VOTOS_NULOS&selected_columns%5B%5D=QT_VOTOS_LEGENDA&selected_columns%5B%5D=NOME_MICRO&selected_columns%5B%5D=NOME_MESO&selected_columns%5B%5D=NOME_MACRO&selected_columns%5B%5D=NOME_MUNICIPIO&format=gzip".format(
         cargo, ano, agregacao_politica, agregacao_regional)
     request = add_filters(request, estado, numero_candidato, numero_partido,
                           codigo_municipio)
