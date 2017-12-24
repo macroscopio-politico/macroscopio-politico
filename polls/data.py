@@ -19,27 +19,36 @@ def years_to_show(position):
 
 
 @memory.cache
-def process_data(position, bubble_color_column):
+def process_data(position, regional_aggregation_column, grouping_column):
     dfs_to_concat = []
 
     for year_to_show in years_to_show(position):
         df = cepesp.consolidacao(
             ano=year_to_show,
             cargo=position,
-            agregacao_regional=bubble_color_column
+            agregacao_regional=cepesp.AGR_REGIONAL.MUNICIPIO
         )
+
         dfs_to_concat.append(df)
 
     votos_df = pd.concat(dfs_to_concat)
 
-    votos_df['QTD_APTOS'] = votos_df[['QTD_APTOS']].astype(int)
-    votos_df['QTD_COMPARECIMENTO'] = votos_df[['QTD_COMPARECIMENTO']].astype(int)
-    votos_df['QTD_ABSTENCOES'] = votos_df[['QTD_ABSTENCOES']].astype(int)
-    votos_df['QT_VOTOS_NOMINAIS'] = votos_df[['QT_VOTOS_NOMINAIS']].astype(int)
-    votos_df['QT_VOTOS_BRANCOS'] = votos_df[['QT_VOTOS_BRANCOS']].astype(int)
-    votos_df['QT_VOTOS_NULOS'] = votos_df[['QT_VOTOS_NULOS']].astype(int)
-    votos_df['QT_VOTOS_LEGENDA'] = votos_df['QT_VOTOS_LEGENDA'].astype(int)
+    votos_df['QTD_APTOS'] = votos_df.QTD_APTOS.astype(int)
+    votos_df['QTD_COMPARECIMENTO'] = votos_df.QTD_COMPARECIMENTO.astype(int)
+    votos_df['QTD_ABSTENCOES'] = votos_df.QTD_ABSTENCOES.astype(int)
+    votos_df['QT_VOTOS_NOMINAIS'] = votos_df.QT_VOTOS_NOMINAIS.astype(int)
+    votos_df['QT_VOTOS_BRANCOS'] = votos_df.QT_VOTOS_BRANCOS.astype(int)
+    votos_df['QT_VOTOS_NULOS'] = votos_df.QT_VOTOS_NULOS.astype(int)
+    votos_df['QT_VOTOS_LEGENDA'] = votos_df.QT_VOTOS_LEGENDA.astype(int)
 
-    years = list(votos_df.ANO_ELEICAO.unique())
+    columns = ['ANO_ELEICAO', 'NUM_TURNO']
 
-    return votos_df.reset_index(), years
+    if grouping_column != regional_aggregation_column:
+        columns.append(regional_aggregation_column)
+
+    columns.append(grouping_column)
+
+    votos_df = votos_df.groupby(columns).sum()
+
+    years = votos_df.index.levels[0]
+    return votos_df.reset_index(level=['NUM_TURNO', grouping_column]), years

@@ -14,8 +14,16 @@ X_AXES_OPTIONS = {
 }
 Y_AXES_OPTIONS = X_AXES_OPTIONS
 BUBBLE_SIZE_OPTIONS = X_AXES_OPTIONS
-BUBBLE_CATEGORY_OPTIONS = {
+GROUPING_OPTIONS = {
+    'Microrregião': 'NOME_MICRO',
     'UF': 'UF',
+    'Mesorregião': 'NOME_MESO',
+    'Macrorregião': 'NOME_MACRO',
+}
+REGION_OPTIONS = {
+    'UF': 'UF',
+    'Mesorregião': 'NOME_MESO',
+    'Macrorregião': 'NOME_MACRO',
 }
 POSITION_OPTIONS = {
     'Presidente': CARGO.PRESIDENTE,

@@ -37,36 +37,36 @@ def candidates():
     Input('x-axes-select', 'value'),
     Input('y-axes-select', 'value'),
     Input('bubble-size-select', 'value'),
-    Input('bubble-color-select', 'value'),
+    Input('grouping-select', 'value'),
     Input('political-aggregation-select', 'value')])
-def candidates_chart_change(year, x_axes, y_axes, bubble_size, bubble_color, political_aggregation):
+def candidates_chart_change(year, x_axes, y_axes, bubble_size, grouping, political_aggregation):
     return update(str(year), x_axes=x_axes, y_axes=y_axes, bubble_size=bubble_size,
-                  bubble_color=bubble_color, political_aggregation=political_aggregation)
+                  grouping=grouping, political_aggregation=political_aggregation)
 
 
 @dash_app.callback(
     Output('years-slider', 'min'),
     [Input('political-aggregation-select', 'value')])
-def skider_min_change(value):
+def input_change(value):
     return years_to_show(value)[0]
 
 
 @dash_app.callback(
     Output('years-slider', 'value'),
     [Input('political-aggregation-select', 'value')])
-def skider_min_change(value):
+def input_change(value):
     return years_to_show(value)[0]
 
 
 @dash_app.callback(
     Output('years-slider', 'max'),
     [Input('political-aggregation-select', 'value')])
-def skider_min_change(value):
+def input_change(value):
     return years_to_show(value)[-1]
 
 
 @dash_app.callback(
     Output('years-slider', 'marks'),
     [Input('political-aggregation-select', 'value')])
-def skider_min_change(value):
+def input_change(value):
     return {i: '{}'.format(i) for i in years_to_show(value)}
