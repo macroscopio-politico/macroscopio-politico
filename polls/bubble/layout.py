@@ -5,6 +5,10 @@ import dash_core_components as dcc
 import dash_html_components as html
 import plotly.graph_objs as go
 
+from common import (
+    controls,
+    menus
+)
 from .constants import (
     BUBBLE_SIZE_OPTIONS,
     GROUPING_OPTIONS,
@@ -150,33 +154,8 @@ def update(current_year=None, x_axes=None, y_axes=None, bubble_size=None,
 update()
 
 
-x_axes_select = html.Div(className='col', children=[
-    html.Label('Eixo X:'),
-    dcc.Dropdown(
-        options=[
-            {'label': label, 'value': label}
-            for label in X_AXES_OPTIONS.keys()
-        ],
-        value=config['current_x_axes'],
-        clearable=False,
-        id='x-axes-select'
-    ),
-])
-
-
-y_axes_select = html.Div(className='col', children=[
-    html.Label('Eixo Y:'),
-    dcc.Dropdown(
-        options=[
-            {'label': label, 'value': label}
-            for label in Y_AXES_OPTIONS.keys()
-        ],
-        value=config['current_y_axes'],
-        clearable=False,
-        id='y-axes-select'
-    ),
-])
-
+x_axes_select = controls.x_axes_select(value=config['current_x_axes'], options=X_AXES_OPTIONS)
+y_axes_select = controls.y_axes_select(value=config['current_y_axes'], options=Y_AXES_OPTIONS)
 
 bubble_size_select = html.Div(className='col', children=[
     html.Label('Tamanho da Bolha:'),
@@ -191,47 +170,12 @@ bubble_size_select = html.Div(className='col', children=[
     ),
 ])
 
-
-grouping_select = html.Div(className='col', children=[
-    html.Label('Agrupar por:'),
-    dcc.Dropdown(
-        options=[
-            {'label': label, 'value': label}
-            for label in GROUPING_OPTIONS.keys()
-        ],
-        value=config['current_grouping'],
-        clearable=False,
-        id='grouping-select'
-    ),
-])
-
-
-regional_aggregation_select = html.Div(className='col', children=[
-    html.Label('Agregação Regional:'),
-    dcc.Dropdown(
-        options=[
-            {'label': label, 'value': label}
-            for label in REGION_OPTIONS.keys()
-        ],
-        value=config['current_regional_aggregation'],
-        clearable=False,
-        id='regional-aggregation-select'
-    ),
-])
-
-
-political_aggregation_select = html.Div(className='col', children=[
-    html.Label('Agregação Politica:'),
-    dcc.Dropdown(
-        options=[
-            {'label': label, 'value': label}
-            for label in POSITION_OPTIONS.keys()
-        ],
-        value=config['current_political_aggregation'],
-        clearable=False,
-        id='political-aggregation-select'
-    ),
-])
+grouping_select = controls.grouping_select(
+    value=config['current_grouping'], options=GROUPING_OPTIONS)
+regional_aggregation_select = controls.regional_aggregation_select(
+    value=config['current_regional_aggregation'], options=REGION_OPTIONS)
+political_aggregation_select = controls.political_aggregation_select(
+    value=config['current_political_aggregation'], options=POSITION_OPTIONS)
 
 
 play_row = html.Div(className='row', children=[
@@ -250,8 +194,12 @@ play_row = html.Div(className='row', children=[
 ])
 
 
+chart_menu = menus.chart_menu()
+
+
 layout = html.Div(className='chart-container', children=[
     html.Div(className='container', children=[
+        chart_menu,
         html.Div(className='row', children=[
             x_axes_select, y_axes_select, bubble_size_select
         ]),

@@ -102,3 +102,4 @@ ENV/
 
 # Other
 static/gen/*
+.vscode/
