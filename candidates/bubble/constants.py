@@ -26,6 +26,12 @@ GROUPING_OPTIONS = {
     'Grau de Instrução': 'DESCRICAO_GRAU_INSTRUCAO',
     'Situação da Candidatura': 'DESC_SIT_TOT_TURNO',
 }
+REGION_OPTIONS = {
+    'UF': 'UF',
+    'Mesorregião': 'NOME_MESO',
+    'Macrorregião': 'NOME_MACRO',
+    'Brasil': 'NOME_PAIS',
+}
 POSITION_OPTIONS = {
     'Presidente': CARGO.PRESIDENTE,
     'Governador': CARGO.GOVERNADOR,

@@ -41,11 +41,11 @@
                 <li class="nav-item {% if request.path == url_for('about') %}active{% endif %}">
                     <a class="nav-link" href="/about">Sobre</a>
                 </li>
-                <li class="nav-item {% if request.path == url_for('polls') %}active{% endif %}">
-                    <a class="nav-link" href="/polls">Consolidação das Eleições</a>
+                <li class="nav-item {% if request.path == url_for('polls_bubble') %}active{% endif %}">
+                    <a class="nav-link" href="/polls/bubble">Consolidação das Eleições</a>
                 </li>
-                <li class="nav-item {% if request.path == url_for('candidates') %}active{% endif %}">
-                    <a class="nav-link" href="/candidates">Candidaturas</a>
+                <li class="nav-item {% if request.path == url_for('candidates_bubble') %}active{% endif %}">
+                    <a class="nav-link" href="/candidates/bubble">Candidaturas</a>
                 </li>
                 <li class="nav-item {% if request.path == url_for('team') %}active{% endif %}">
                     <a class="nav-link" href="/team">Equipe</a>

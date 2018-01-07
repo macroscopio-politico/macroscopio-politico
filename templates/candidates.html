@@ -11,8 +11,12 @@
 </div>
 {% endblock %}
 
+{% block css %}
+    {{ css | safe }}
+{% endblock %}
+
 {% block scripts %}
-    {{ config | safe}}
+    {{ config | safe }}
     {{ css | safe }}
     {{ js | safe }}
     {% include 'parts/disqus.html' %}

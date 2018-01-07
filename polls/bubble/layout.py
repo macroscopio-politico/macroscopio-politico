@@ -7,8 +7,12 @@ import plotly.graph_objs as go
 
 from common import (
     controls,
-    menus
 )
+from polls.data import (
+    process_data,
+    years_to_show,
+)
+from polls.menus import chart_menu
 from .constants import (
     BUBBLE_SIZE_OPTIONS,
     GROUPING_OPTIONS,
@@ -17,21 +21,17 @@ from .constants import (
     X_AXES_OPTIONS,
     Y_AXES_OPTIONS,
 )
-from .data import (
-    process_data,
-    years_to_show,
-)
 
-config = dict(
+DEFAULT_CONFIG = dict(
     current_x_axes='Qtd. Aptos',
     current_y_axes='Qtd. Comparecimento',
     current_bubble_size='Qtd. Abstenções',
     current_grouping='UF',
     current_regional_aggregation='Macrorregião',
     current_political_aggregation='Presidente',
-    years=None,
-    source=None
 )
+
+config = dict(**DEFAULT_CONFIG)
 
 
 chart = dcc.Graph(
@@ -44,9 +44,6 @@ def plot_figure(data):
     y_column = Y_AXES_OPTIONS[config['current_y_axes']]
     bubble_size_column = BUBBLE_SIZE_OPTIONS[config['current_bubble_size']]
     grouping_column = GROUPING_OPTIONS[config['current_grouping']]
-
-    size_percentage_sum = data[bubble_size_column].sum()
-    data.loc[:, 'TEXT_PERCENTAGE'] = data.loc[:, bubble_size_column] / size_percentage_sum
 
     figure = dict(
         data=[],
@@ -127,6 +124,7 @@ def update(current_year=None, x_axes=None, y_axes=None, bubble_size=None,
         political_aggregation = config['current_political_aggregation']
 
     votos_df, years = process_data(
+        bubble_size_column=BUBBLE_SIZE_OPTIONS[bubble_size],
         grouping_column=GROUPING_OPTIONS[grouping],
         regional_aggregation_column=REGION_OPTIONS[regional_aggregation],
         position=POSITION_OPTIONS[political_aggregation])
@@ -146,30 +144,16 @@ def update(current_year=None, x_axes=None, y_axes=None, bubble_size=None,
     config['current_grouping'] = grouping
     config['current_regional_aggregation'] = regional_aggregation
     config['current_political_aggregation'] = political_aggregation
-    config['years'] = years
-    config['data'] = data
 
     return plot_figure(data)
 
-update()
 
-
-x_axes_select = controls.x_axes_select(value=config['current_x_axes'], options=X_AXES_OPTIONS)
-y_axes_select = controls.y_axes_select(value=config['current_y_axes'], options=Y_AXES_OPTIONS)
-
-bubble_size_select = html.Div(className='col', children=[
-    html.Label('Tamanho da Bolha:'),
-    dcc.Dropdown(
-        options=[
-            {'label': label, 'value': label}
-            for label in BUBBLE_SIZE_OPTIONS.keys()
-        ],
-        value=config['current_bubble_size'],
-        clearable=False,
-        id='bubble-size-select'
-    ),
-])
-
+x_axes_select = controls.x_axes_select(
+    value=config['current_x_axes'], options=X_AXES_OPTIONS)
+y_axes_select = controls.y_axes_select(
+    value=config['current_y_axes'], options=Y_AXES_OPTIONS)
+bubble_size_select = controls.bubble_size_select(
+    value=config['current_bubble_size'], options=BUBBLE_SIZE_OPTIONS)
 grouping_select = controls.grouping_select(
     value=config['current_grouping'], options=GROUPING_OPTIONS)
 regional_aggregation_select = controls.regional_aggregation_select(
@@ -194,16 +178,11 @@ play_row = html.Div(className='row', children=[
 ])
 
 
-chart_menu = menus.chart_menu()
-
-
 layout = html.Div(className='chart-container', children=[
     html.Div(className='container', children=[
-        chart_menu,
+        chart_menu(),
         html.Div(className='row', children=[
-            x_axes_select, y_axes_select, bubble_size_select
-        ]),
-        html.Div(className='row', children=[
+            x_axes_select, y_axes_select, bubble_size_select,
             grouping_select, regional_aggregation_select, political_aggregation_select,
         ]),
         html.Div(className='container-fluid', children=[

@@ -4,7 +4,9 @@ from cepesp import (
 
 
 X_AXES_OPTIONS = {
-    'Qtd. Aptos': 'QTD_APTOS',
+    'Ano': 'ANO_ELEICAO',
+}
+Y_AXES_OPTIONS = {
     'Qtd. Comparecimento': 'QTD_COMPARECIMENTO',
     'Qtd. Abstenções': 'QTD_ABSTENCOES',
     'Qtd. Votos Nominais': 'QT_VOTOS_NOMINAIS',
@@ -12,15 +14,7 @@ X_AXES_OPTIONS = {
     'Qtd. Votos Nulos': 'QT_VOTOS_NULOS',
     'Qtd. Votos Legenda': 'QT_VOTOS_LEGENDA',
 }
-Y_AXES_OPTIONS = X_AXES_OPTIONS
-BUBBLE_SIZE_OPTIONS = X_AXES_OPTIONS
 GROUPING_OPTIONS = {
-    'Microrregião': 'NOME_MICRO',
-    'UF': 'UF',
-    'Mesorregião': 'NOME_MESO',
-    'Macrorregião': 'NOME_MACRO',
-}
-REGION_OPTIONS = {
     'UF': 'UF',
     'Mesorregião': 'NOME_MESO',
     'Macrorregião': 'NOME_MACRO',

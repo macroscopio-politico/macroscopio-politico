@@ -8,10 +8,10 @@ import plotly.graph_objs as go
 from common import (
     controls,
 )
-from candidates.data import (
+from polls.data import (
     process_bar_data,
 )
-from candidates.menus import chart_menu
+from polls.menus import chart_menu
 from .constants import (
     GROUPING_OPTIONS,
     POSITION_OPTIONS,
@@ -21,8 +21,8 @@ from .constants import (
 
 DEFAULT_CONFIG = dict(
     current_x_axes='Ano',
-    current_y_axes='Qtd. Votos',
-    current_grouping='Gênero',
+    current_y_axes='Qtd. Comparecimento',
+    current_grouping='Brasil',
     current_political_aggregation='Presidente',
 )
 
@@ -30,7 +30,7 @@ config = dict(**DEFAULT_CONFIG)
 
 
 chart = dcc.Graph(
-    id='candidates-chart', style={'margin': '20px 0px'},
+    id='polls-chart', style={'margin': '20px 0px'},
 )
 
 

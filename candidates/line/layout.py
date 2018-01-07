@@ -8,10 +8,10 @@ import plotly.graph_objs as go
 from common import (
     controls,
 )
-from polls.data import (
+from candidates.data import (
     process_line_data,
 )
-from polls.menus import chart_menu
+from candidates.menus import chart_menu
 from .constants import (
     GROUPING_OPTIONS,
     POSITION_OPTIONS,
@@ -21,7 +21,7 @@ from .constants import (
 
 DEFAULT_CONFIG = dict(
     current_x_axes='Ano',
-    current_y_axes='Qtd. Comparecimento',
+    current_y_axes='Qtd. Votos',
     current_grouping='UF',
     current_political_aggregation='Presidente',
 )
@@ -30,7 +30,7 @@ config = dict(**DEFAULT_CONFIG)
 
 
 chart = dcc.Graph(
-    id='polls-chart', style={'margin': '20px 0px'},
+    id='candidates-chart', style={'margin': '20px 0px'},
 )
 
 
@@ -55,7 +55,7 @@ def plot_figure(data):
     )
 
     for region_name in set(data.index):
-        region_df = data.loc[region_name].reset_index()
+        region_df = data.loc[[region_name]].reset_index()
 
         plot_data = go.Scatter(
             x=[],
@@ -112,10 +112,10 @@ def update(x_axes=None, y_axes=None, grouping=None, political_aggregation=None):
     return plot_figure(data)
 
 
-x_axes_select = controls.x_axes_select(value=config['current_x_axes'], options=X_AXES_OPTIONS)
-y_axes_select = controls.y_axes_select(value=config['current_y_axes'], options=Y_AXES_OPTIONS)
-
-
+x_axes_select = controls.x_axes_select(
+    value=config['current_x_axes'], options=X_AXES_OPTIONS)
+y_axes_select = controls.y_axes_select(
+    value=config['current_y_axes'], options=Y_AXES_OPTIONS)
 grouping_select = controls.grouping_select(
     value=config['current_grouping'], options=GROUPING_OPTIONS)
 political_aggregation_select = controls.political_aggregation_select(
@@ -126,10 +126,7 @@ layout = html.Div(className='chart-container', children=[
     html.Div(className='container', children=[
         chart_menu(),
         html.Div(className='row', children=[
-            x_axes_select, y_axes_select
-        ]),
-        html.Div(className='row', children=[
-            grouping_select, political_aggregation_select
+            x_axes_select, y_axes_select, grouping_select, political_aggregation_select
         ]),
         html.Div(className='container-fluid', children=[
             chart

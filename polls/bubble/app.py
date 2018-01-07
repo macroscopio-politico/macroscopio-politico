@@ -6,14 +6,16 @@ from dash.dependencies import (
 )
 from flask import render_template
 
+from polls.data import (
+    years_to_show,
+)
 from server import server
 from .layout import (
     layout,
     update,
-    years_to_show,
 )
 
-dash_app = dash.Dash(__name__, sharing=True, server=server, url_base_pathname='/dash/candidates/bubble')
+dash_app = dash.Dash(__name__, sharing=True, server=server, url_base_pathname='/dash/polls/bubble')
 dash_app.layout = layout
 
 # Since we're adding callbacks to elements that don't exist in the app.layout,
@@ -26,13 +28,12 @@ css = dash_app._generate_css_dist_html()
 config = dash_app._generate_config_html()
 
 
-@server.route('/candidates/bubble')
-def candidates_bubble():
-    return render_template('candidates.html', css=css, js=scripts, config=config)
-
+@server.route('/polls/bubble')
+def polls_bubble():
+    return render_template('polls.html', css=css, js=scripts, config=config)
 
 @dash_app.callback(
-    Output('candidates-chart', 'figure'),
+    Output('polls-chart', 'figure'),
     [
     Input('years-slider', 'value'),
     Input('x-axes-select', 'value'),
@@ -41,7 +42,7 @@ def candidates_bubble():
     Input('grouping-select', 'value'),
     Input('regional-aggregation-select', 'value'),
     Input('political-aggregation-select', 'value')])
-def candidates_chart_change(
+def polls_chart_change(
         year,
         x_axes,
         y_axes,

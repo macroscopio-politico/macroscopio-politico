@@ -12,7 +12,7 @@ from .layout import (
     update,
 )
 
-dash_app = dash.Dash(__name__, sharing=True, server=server, url_base_pathname='/dash/polls/pie')
+dash_app = dash.Dash(__name__, sharing=True, server=server, url_base_pathname='/dash/candidates/pie')
 dash_app.layout = layout
 
 # Since we're adding callbacks to elements that don't exist in the app.layout,
@@ -25,17 +25,18 @@ css = dash_app._generate_css_dist_html()
 config = dash_app._generate_config_html()
 
 
-@server.route('/polls/pie')
-def polls_pie():
-    return render_template('polls.html', css=css, js=scripts, config=config)
+@server.route('/candidates/pie')
+def candidates_pie():
+    return render_template('candidates.html', css=css, js=scripts, config=config)
+
 
 @dash_app.callback(
-    Output('polls-chart', 'figure'),
+    Output('candidates-chart', 'figure'),
     [
     Input('value-axes-select', 'value'),
     Input('grouping-select', 'value'),
     Input('political-aggregation-select', 'value')])
-def polls_chart_change(
+def candidates_chart_change(
         value_axes,
         grouping,
         political_aggregation):

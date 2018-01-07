@@ -8,10 +8,10 @@ import plotly.graph_objs as go
 from common import (
     controls,
 )
-from candidates.data import (
-    process_bar_data,
+from polls.data import (
+    process_line_data,
 )
-from candidates.menus import chart_menu
+from polls.menus import chart_menu
 from .constants import (
     GROUPING_OPTIONS,
     POSITION_OPTIONS,
@@ -21,8 +21,8 @@ from .constants import (
 
 DEFAULT_CONFIG = dict(
     current_x_axes='Ano',
-    current_y_axes='Qtd. Votos',
-    current_grouping='Gênero',
+    current_y_axes='Qtd. Comparecimento',
+    current_grouping='UF',
     current_political_aggregation='Presidente',
 )
 
@@ -30,13 +30,14 @@ config = dict(**DEFAULT_CONFIG)
 
 
 chart = dcc.Graph(
-    id='candidates-chart', style={'margin': '20px 0px'},
+    id='polls-chart', style={'margin': '20px 0px'},
 )
 
 
 def plot_figure(data):
     x_column = X_AXES_OPTIONS[config['current_x_axes']]
     y_column = Y_AXES_OPTIONS[config['current_y_axes']]
+    grouping_column = GROUPING_OPTIONS[config['current_grouping']]
 
     figure = dict(
         data=[],
@@ -45,7 +46,7 @@ def plot_figure(data):
                 config['current_x_axes'], config['current_y_axes'], config['current_grouping'],
                 config['current_political_aggregation']
             ),
-            xaxis={'type': 'category', 'title': config['current_x_axes']},
+            xaxis={'type': 'log', 'title': config['current_x_axes']},
             yaxis={'title': config['current_y_axes']},
             margin={'l': 60, 'b': 40, 't': 110, 'r': 0},
             legend={'x': 0, 'y': 1},
@@ -56,20 +57,23 @@ def plot_figure(data):
     for region_name in set(data.index):
         region_df = data.loc[[region_name]].reset_index()
 
-        plot_data = go.Bar(
+        plot_data = go.Scatter(
             x=[],
             y=[],
             text=[],
-            textposition='auto',
+            mode='lines+markers',
+            connectgaps=True,
             name=region_name
         )
+
+        has_text_value = grouping_column in region_df.columns
 
         for _, row in region_df.iterrows():
             plot_data['x'].append(row[x_column])
             plot_data['y'].append(row[y_column])
             plot_data['text'].append(
-                '{:.2%}'.format(
-                    float(row['TEXT_PERCENTAGE']),
+                '{}'.format(
+                    str(row[grouping_column] if has_text_value else region_name)
                 )
             )
 
@@ -92,7 +96,7 @@ def update(x_axes=None, y_axes=None, grouping=None, political_aggregation=None):
     if political_aggregation is None:
         political_aggregation = config['current_political_aggregation']
 
-    votos_df, years = process_bar_data(
+    votos_df, years = process_line_data(
         x_column=X_AXES_OPTIONS[x_axes],
         y_column=Y_AXES_OPTIONS[y_axes],
         grouping_column=GROUPING_OPTIONS[grouping],
