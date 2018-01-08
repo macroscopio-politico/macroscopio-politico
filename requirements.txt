@@ -30,3 +30,5 @@ traitlets==4.3.2
 urllib3==1.22
 webassets==0.12.1
 Werkzeug==0.12.2
+gunicorn==19.7.1
+gevent==1.2.2

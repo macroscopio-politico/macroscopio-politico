@@ -1,7 +1,7 @@
-Macroscópio Eleitoral
+Macroscópio Político
 =====================
 
-O Macroscópio Eleitoral nasce com o propósito de facilitar a compreensão sobre o processo eleitoral
+O Macroscópio Político nasce com o propósito de facilitar a compreensão sobre o processo eleitoral
 brasileiro por meio da utilização de tecnologias cívicas. Aqui você encontrará diferentes formas de
 cruzamento dos dados do CEPESP que possibilitarão a visualização intuitiva dos pleitos no tempo e
 no espaço. Nossa equipe é constituída por uma socióloga, um engenheiro de software, um cientista
@@ -26,11 +26,26 @@ Como utilizar?
 
 .. code-block:: bash
 
-    $ sudo ./main.py
+    $ ./main.py
 
 .. _use_content_end:
 
-Agora acesse o macroscópio eleitoral através de http://127.0.0.1:80 ou equivalente.
+Agora acesse o macroscópio eleitoral através de http://127.0.0.1:5000 ou equivalente. Para acessar em modo de
+produção, utilize o executável wsgi conjuntamente com o gunicorn:
+
+.. _use_gunicorn_content_start:
+
+.. code-block:: bash
+
+    $ gunicorn --bind 0.0.0.0:5000 --worker-class gevent wsgi
+
+.. _use_gunicorn_content_end:
+
+O qual requer que as seguintes variáveis de ambiente estejam definidas:
+
+    - GA_TRACKING_ID
+    - DISQUS_SRC
+    - SHARETHIS_SRC
 
 Licença
 -------
