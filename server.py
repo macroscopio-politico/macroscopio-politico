@@ -7,7 +7,7 @@ from flask_assets import (
     Environment,
 )
 
-server = Flask(__name__)
+server = Flask(__name__, instance_relative_config=True)
 
 
 assets = Environment(server)

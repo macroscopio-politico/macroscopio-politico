@@ -27,7 +27,7 @@ config = dash_app._generate_config_html()
 
 @server.route('/polls/pie')
 def polls_pie():
-    return render_template('polls.html', css=css, js=scripts, config=config)
+    return render_template('polls.html', css=css, js=scripts, dash_config=config)
 
 
 @dash_app.callback(

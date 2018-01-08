@@ -28,7 +28,7 @@ config = dash_app._generate_config_html()
 
 @server.route('/candidates/bubble')
 def candidates_bubble():
-    return render_template('candidates.html', css=css, js=scripts, config=config)
+    return render_template('candidates.html', css=css, js=scripts, dash_config=config)
 
 
 @dash_app.callback(
