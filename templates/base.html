@@ -3,19 +3,15 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Macroscópio Eleitoral</title>
+    <title>Macroscópio Político</title>
     <link rel="shortcut icon" href="/static/favicon.ico"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
-          integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
-          crossorigin="anonymous"/>
-    <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css" type="text/css"/>
     {% assets "css_all" %}
         <link rel="stylesheet" href="{{ ASSET_URL }}"/>
     {% endassets %}
     {% block css %} {% endblock %}
 
     <meta name="author" content="Lucas Lira Gomes">
-    <meta name="description" content="O Macroscópio Eleitoral nasce com o propósito de facilitar a compreensão
+    <meta name="description" content="O Macroscópio Político nasce com o propósito de facilitar a compreensão
     sobre o processo eleitoral brasileiro por meio da utilização de tecnologias cívicas. Aqui você encontrará
     diferentes formas de cruzamento dos dados do CEPESP que possibilitarão a visualização intuitiva dos pleitos
     no tempo e no espaço.">
@@ -25,7 +21,7 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
-        <a class="navbar-brand" href="/">Macroscópio Eleitoral</a>
+        <a class="navbar-brand" href="/">Macroscópio Político</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
                 aria-controls="navbarColor01"
                 aria-expanded="false" aria-label="Toggle navigation" style="">
@@ -67,9 +63,9 @@
             </a>.</p>
         </div>
 
-        <script type='text/javascript'
-                src='//platform-api.sharethis.com/js/sharethis.js#property=5a32cce70c3a12001239dd4d&product=sticky-share-buttons'
-                async='async'></script>
+        {% include 'parts/analytics.html' %}
+        {% include 'parts/share-buttons.html' %}
+
         {% block scripts %} {% endblock %}
     </footer>
 </body>

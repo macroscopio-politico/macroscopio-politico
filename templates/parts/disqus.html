@@ -1,0 +1,14 @@
+{% if config.DISQUS_SRC %}
+    <script async>
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = '{{ config.DISQUS_SRC }}';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+    </script>
+{% else %}
+    <script>
+      console.error('DISQUS_SRC is undefined.')
+    </script>
+{% endif %}

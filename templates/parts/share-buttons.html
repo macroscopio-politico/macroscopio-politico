@@ -1,0 +1,7 @@
+{% if config.SHARETHIS_SRC %}
+    <script async type='text/javascript' src='{{ config.SHARETHIS_SRC }}'></script>
+{% else %}
+    <script>
+      console.error('SHARETHIS_SRC is undefined.')
+    </script>
+{% endif %}
