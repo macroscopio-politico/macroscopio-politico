@@ -5,7 +5,6 @@ from tempfile import mkdtemp
 
 import pandas as pd
 
-
 baseURL = "http://cepesp.io/api/consulta/"
 baseDir = os.path.dirname(__file__)
 cache_dir = mkdtemp()
@@ -62,8 +61,7 @@ def read_csv(cache_filename, request):
     if not os.path.exists(cache_path):
         response = urllib.request.urlopen(baseURL + request)
         save_cache(response, cache_filename)
-    return pd.read_csv(
-        cache_path, sep=",", dtype=str)
+    return pd.read_csv(cache_path, sep=",", dtype=str)
 
 
 def votos(cargo=1,
@@ -90,7 +88,14 @@ def consolidacao(cargo=1,
                  numero_candidato=None,
                  numero_partido=None,
                  codigo_municipio=None):
-    request = "tse?cargo={}&anos={}&agregacao_politica={}&agregacao_regional={}&mun_filter=&uf_filter=&brancos=1&nulos=1&selected_columns%5B%5D=ANO_ELEICAO&selected_columns%5B%5D=NUM_TURNO&selected_columns%5B%5D=UF&selected_columns%5B%5D=DESCRICAO_ELEICAO&selected_columns%5B%5D=DESCRICAO_CARGO&selected_columns%5B%5D=QTD_APTOS&selected_columns%5B%5D=QTD_COMPARECIMENTO&selected_columns%5B%5D=QTD_ABSTENCOES&selected_columns%5B%5D=QT_VOTOS_NOMINAIS&selected_columns%5B%5D=QT_VOTOS_BRANCOS&selected_columns%5B%5D=QT_VOTOS_NULOS&selected_columns%5B%5D=QT_VOTOS_LEGENDA&selected_columns%5B%5D=NOME_MICRO&selected_columns%5B%5D=NOME_MESO&selected_columns%5B%5D=NOME_MACRO&selected_columns%5B%5D=NOME_MUNICIPIO&format=gzip".format(
+    request = "tse?cargo={}&anos={}&agregacao_politica={}&agregacao_regional={" \
+              "}&mun_filter=&uf_filter=&brancos=1&nulos=1&selected_columns%5B%5D=ANO_ELEICAO&selected_columns%5B%5D" \
+              "=NUM_TURNO&selected_columns%5B%5D=UF&selected_columns%5B%5D=DESCRICAO_ELEICAO&selected_columns%5B%5D" \
+              "=DESCRICAO_CARGO&selected_columns%5B%5D=QTD_APTOS&selected_columns%5B%5D=QTD_COMPARECIMENTO" \
+              "&selected_columns%5B%5D=QTD_ABSTENCOES&selected_columns%5B%5D=QT_VOTOS_NOMINAIS&selected_columns%5B%5D" \
+              "=QT_VOTOS_BRANCOS&selected_columns%5B%5D=QT_VOTOS_NULOS&selected_columns%5B%5D=QT_VOTOS_LEGENDA" \
+              "&selected_columns%5B%5D=NOME_MICRO&selected_columns%5B%5D=NOME_MESO&selected_columns%5B%5D=NOME_MACRO" \
+              "&selected_columns%5B%5D=NOME_MUNICIPIO&format=gzip".format(
         cargo, ano, agregacao_politica, agregacao_regional)
     request = add_filters(request, estado, numero_candidato, numero_partido,
                           codigo_municipio)
@@ -142,12 +147,12 @@ def votos_x_candidatos(cargo=1,
                       estado, numero_candidato)
     return vot.set_index(
         ["NUMERO_CANDIDATO", "SIGLA_UE", "NUM_TURNO", "ANO_ELEICAO"]).merge(
-            cand.set_index(
-                ["NUMERO_CANDIDATO", "SIGLA_UE", "NUM_TURNO", "ANO_ELEICAO"]),
-            how="left",
-            left_index=True,
-            right_index=True,
-            suffixes=["_x", "_y"]).reset_index()
+        cand.set_index(
+            ["NUMERO_CANDIDATO", "SIGLA_UE", "NUM_TURNO", "ANO_ELEICAO"]),
+        how="left",
+        left_index=True,
+        right_index=True,
+        suffixes=["_x", "_y"]).reset_index()
 
 
 def votos_x_legendas(cargo=1,
@@ -163,12 +168,12 @@ def votos_x_legendas(cargo=1,
     leg = leg.rename(columns={"NUMERO_PARTIDO": "NUMERO_CANDIDATO"})
     return vot.set_index(
         ["NUMERO_CANDIDATO", "SIGLA_UE", "NUM_TURNO", "ANO_ELEICAO"]).merge(
-            leg.set_index(
-                ["NUMERO_CANDIDATO", "SIGLA_UE", "NUM_TURNO", "ANO_ELEICAO"]),
-            how="left",
-            left_index=True,
-            right_index=True,
-            suffixes=["_x", "_y"]).reset_index()
+        leg.set_index(
+            ["NUMERO_CANDIDATO", "SIGLA_UE", "NUM_TURNO", "ANO_ELEICAO"]),
+        how="left",
+        left_index=True,
+        right_index=True,
+        suffixes=["_x", "_y"]).reset_index()
 
 
 def candidato_x_legendas(cargo=1,
