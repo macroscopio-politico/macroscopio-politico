@@ -16,8 +16,8 @@
 {% endblock %}
 
 {% block scripts %}
+    {% include 'parts/disqus.html' %}
     {{ dash_config | safe }}
     {{ css | safe }}
     {{ js | safe }}
-    {% include 'parts/disqus.html' %}
 {% endblock %}
