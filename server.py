@@ -1,17 +1,18 @@
-from flask import Flask, render_template
-from flask_assets import Environment, Bundle
+from flask import (
+    Flask,
+    render_template,
+)
+from flask_assets import (
+    Bundle,
+    Environment,
+)
 
-server = Flask(__name__)
+server = Flask(__name__, instance_relative_config=True)
+
+
 assets = Environment(server)
-
-css = Bundle('css/base.css', 'css/team.css', output='gen/packed.css')
+css = Bundle('css/bootstrap.css', 'css/bootswatch.css', 'css/base.css', 'css/team.css', output='gen/packed.css')
 assets.register('css_all', css)
-
-
-@server.after_request
-def add_header(response):
-    response.headers["Cache-Control"] = "public, max-age=300"
-    return response
 
 
 @server.route('/team')
