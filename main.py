@@ -5,5 +5,9 @@ import polls
 
 from server import server
 
+
+server.config.from_object('settings.DevelopmentConfig')
+
+
 if __name__ == '__main__':
-    server.run(debug=True)
+    server.run(host='0.0.0.0')
