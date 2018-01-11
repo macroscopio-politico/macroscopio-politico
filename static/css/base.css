@@ -56,3 +56,48 @@ footer {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+/* Custom, iPhone Retina */
+@media only screen and (min-width : 320px) {
+    .header {
+        font-size: 2.8rem;
+        font-weight: 300;
+        line-height: 1.2;
+    }
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : 480px) {
+    .header {
+        font-size: 3.5rem;
+        font-weight: 300;
+        line-height: 1.2;
+    }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+    .header {
+        font-size: 4.3rem;
+        font-weight: 300;
+        line-height: 1.2;
+    }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+    .header {
+        font-size: 4.5rem;
+        font-weight: 300;
+        line-height: 1.2;
+    }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+    .header {
+        font-size: 4.5rem;
+        font-weight: 300;
+        line-height: 1.2;
+    }
+}
