@@ -27,7 +27,7 @@ PyYAML==3.12
 requests==2.18.4
 six==1.11.0
 traitlets==4.3.2
-urllib3==1.22
+urllib3==1.26.5
 webassets==0.12.1
 Werkzeug==0.12.2
 gunicorn==19.7.1
